@@ -34,7 +34,7 @@
     </p>
   } @else {
     <div class="grid">
-      @for (s of suggestions(); track s.top.id + s.bottom.id + (s.jacket?.id || '')) {
+      @for (s of suggestions(); track s.top.id + (s.bottom?.id || '') + (s.jacket?.id || '')) {
         <article class="outfit-card">
           <div class="score">{{ scorePercent(s.score) }}% match</div>
           <div class="pieces">
@@ -46,14 +46,16 @@
               }
               <span>{{ s.top.name }}</span>
             </div>
-            <div class="piece">
-              @if (s.bottom.imageDataUrl) {
-                <img [src]="s.bottom.imageDataUrl" alt="{{ s.bottom.name }}" />
-              } @else {
-                <div class="swatch" [style.background]="s.bottom.color"></div>
-              }
-              <span>{{ s.bottom.name }}</span>
-            </div>
+            @if (s.bottom; as bottom) {
+              <div class="piece">
+                @if (bottom.imageDataUrl) {
+                  <img [src]="bottom.imageDataUrl" alt="{{ bottom.name }}" />
+                } @else {
+                  <div class="swatch" [style.background]="bottom.color"></div>
+                }
+                <span>{{ bottom.name }}</span>
+              </div>
+            }
             @if (s.jacket; as jacket) {
               <div class="piece">
                 @if (jacket.imageDataUrl) {

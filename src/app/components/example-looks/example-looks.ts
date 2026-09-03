@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { STARTER_WARDROBE } from '../../data/starter-wardrobe';
 import { ClothingItem } from '../../models/clothing-item.model';
 import { ClosetService } from '../../services/closet.service';
+import { ToastService } from '../../services/toast.service';
 
 type StarterItem = Omit<ClothingItem, 'id' | 'createdAt'>;
 
@@ -19,19 +20,29 @@ function find(name: string): StarterItem {
 
 const LOOKS: ExampleLook[] = [
   {
-    title: 'Pretty in Pink Office Day',
-    vibe: 'Office',
-    pieces: [find('Rose Pink Blouse'), find('Blush Trousers')],
+    title: 'Festive Pink Saree Set',
+    vibe: 'Family Function',
+    pieces: [find('Pink Silk Saree'), find('Rose Sari Blouse')],
   },
   {
-    title: 'Weekend Blush & Denim',
+    title: 'Easy Breezy Salwar Kameez',
     vibe: 'Casual',
-    pieces: [find('Blush Tee'), find('Floral Skater Skirt Jeans'), find('Rosewood Denim Jacket')],
+    pieces: [find('Peach Salwar Kameez')],
   },
   {
-    title: 'Party-Ready Berry Chic',
+    title: 'Evening Party Gown',
     vibe: 'Party',
-    pieces: [find('Berry Party Tee'), find('Black Slim Trousers')],
+    pieces: [find('Party Gown')],
+  },
+  {
+    title: 'Weekend Frock & Denim',
+    vibe: 'Casual',
+    pieces: [find('Floral Frock Dress'), find('Rosewood Denim Jacket')],
+  },
+  {
+    title: "Festive Cream Kurta",
+    vibe: 'Family Function',
+    pieces: [find('Cream Kurta'), find('Navy Chinos')],
   },
   {
     title: 'Smart Blue Weekday',
@@ -41,12 +52,12 @@ const LOOKS: ExampleLook[] = [
   {
     title: 'Easy Weekend Denim',
     vibe: 'Casual',
-    pieces: [find('Classic Grey Tee'), find('Indigo Jeans'), find('Light-Wash Denim Jacket')],
+    pieces: [find('Classic Grey Tee'), find('Indigo Jeans'), find('White Sneakers')],
   },
   {
-    title: 'Sharp Formal Evening',
-    vibe: 'Formal Event',
-    pieces: [find('Forest Green Polo'), find('Black Slim Trousers'), find('Charcoal Blazer')],
+    title: "Maroon Party Kurta",
+    vibe: 'Party',
+    pieces: [find('Maroon Festive Kurta'), find('Black Slim Trousers'), find('Charcoal Blazer')],
   },
 ];
 
@@ -58,12 +69,21 @@ const LOOKS: ExampleLook[] = [
 })
 export class ExampleLooks {
   readonly looks = LOOKS;
+  readonly justAdded = signal<string | null>(null);
 
-  constructor(private closet: ClosetService) {}
+  constructor(
+    private closet: ClosetService,
+    private toast: ToastService
+  ) {}
 
   addLook(look: ExampleLook): void {
     for (const piece of look.pieces) {
       this.closet.addItem(piece);
     }
+    this.justAdded.set(look.title);
+    this.toast.show(`"${look.title}" added to your closet`);
+    setTimeout(() => {
+      if (this.justAdded() === look.title) this.justAdded.set(null);
+    }, 2000);
   }
 }

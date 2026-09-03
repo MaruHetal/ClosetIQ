@@ -73,5 +73,14 @@
     border-radius: 50%;
     cursor: pointer;
     line-height: 1;
+    transition: transform 0.1s ease, background 0.1s ease;
+
+    &:hover {
+      background: #c23c7a;
+    }
+
+    &:active {
+      transform: scale(0.85);
+    }
   }
 }

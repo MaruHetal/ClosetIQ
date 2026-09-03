@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   BOTTOM_CATEGORIES,
   ClothingItem,
+  ONE_PIECE_CATEGORIES,
   OUTER_CATEGORIES,
   Occasion,
   TOP_CATEGORIES,
@@ -10,7 +11,7 @@ import { colorHarmonyScore } from './color-utils';
 
 export interface OutfitSuggestion {
   top: ClothingItem;
-  bottom: ClothingItem;
+  bottom?: ClothingItem;
   jacket?: ClothingItem;
   score: number; // 0-1, higher is better
 }
@@ -18,8 +19,9 @@ export interface OutfitSuggestion {
 @Injectable({ providedIn: 'root' })
 export class OutfitMatcherService {
   /**
-   * Builds ranked top+bottom(+jacket) combinations for an occasion,
-   * scored by color harmony and occasion fit.
+   * Builds ranked top+bottom(+jacket) combinations for an occasion, scored by
+   * color harmony and occasion fit. One-piece garments (saree sets aside,
+   * salwar-kameez/dress/gown) are offered on their own as complete outfits.
    */
   suggest(items: ClothingItem[], occasion: Occasion, limit = 6): OutfitSuggestion[] {
     const tops = items.filter(
@@ -31,8 +33,14 @@ export class OutfitMatcherService {
     const jackets = items.filter(
       (i) => OUTER_CATEGORIES.includes(i.category) && i.occasions.includes(occasion)
     );
+    const onePieces = items.filter(
+      (i) => ONE_PIECE_CATEGORIES.includes(i.category) && i.occasions.includes(occasion)
+    );
 
-    const suggestions: OutfitSuggestion[] = [];
+    const suggestions: OutfitSuggestion[] = onePieces.map((piece) => ({
+      top: piece,
+      score: 1,
+    }));
 
     for (const top of tops) {
       for (const bottom of bottoms) {

@@ -7,15 +7,25 @@ etc.) and getting outfit suggestions based on occasion and color matching.
 
 ## Features
 
-- Add clothing items with a name, category, color, optional photo, and the
-  occasions you'd wear them for (office, family function, casual outing,
-  party, formal event, workout).
-- Browse your full closet as a grid.
-- Get ranked outfit suggestions (top + bottom + optional jacket) for a chosen
-  occasion, scored by color-wheel harmony (complementary, analogous, neutral
-  pairings).
+- Add clothing items with a name, category (including Indian wear like
+  saree, blouse, salwar kameez, kurta, dress, and gown), color, gender
+  (girls/boys/unisex), optional photo, and the occasions you'd wear them for
+  (office, family function, casual outing, party, formal event, workout).
+- Browse your full closet as a grid, filterable by gender.
+- One-click "starter wardrobe" and curated example looks (festive sarees,
+  salwar kameez, kurtas, western basics) so a new closet isn't empty.
+- Get ranked outfit suggestions (top + bottom + optional jacket, or a
+  complete one-piece outfit) for a chosen occasion, scored by color-wheel
+  harmony (complementary, analogous, neutral pairings).
 - Data is stored locally in the browser (`localStorage`) — no backend or
   account required.
+
+## Image credits
+
+Starter-wardrobe and example-look photos are freely-licensed reference
+images from [Wikimedia Commons](https://commons.wikimedia.org), served via
+its `Special:FilePath` redirect. See each image's Commons file page for its
+specific license and photographer credit.
 
 ## Tech stack
 

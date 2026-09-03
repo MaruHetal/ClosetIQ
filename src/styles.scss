@@ -1,13 +1,13 @@
 :root {
-  --bg: #fdf1f6;
+  --bg: #fffafc;
   --card-bg: #ffffff;
-  --text: #4a2c3a;
-  --muted: #9a7488;
-  --border: #f3d3e2;
+  --text: #56394a;
+  --muted: #a98aa0;
+  --border: #f7e2ec;
   --primary: #d6528f;
   --primary-contrast: #ffffff;
-  --accent: #f2a6c6;
-  --accent-soft: #fbe3ee;
+  --accent: #f6c5da;
+  --accent-soft: #fdf0f6;
   --heading-font: 'Playfair Display', 'Georgia', serif;
   font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
 }
@@ -21,10 +21,10 @@ body {
   color: var(--text);
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle at 8% 12%, rgba(242, 166, 198, 0.35) 0, transparent 22%),
-    radial-gradient(circle at 92% 18%, rgba(214, 82, 143, 0.18) 0, transparent 24%),
-    radial-gradient(circle at 15% 85%, rgba(214, 82, 143, 0.18) 0, transparent 24%),
-    radial-gradient(circle at 88% 90%, rgba(242, 166, 198, 0.3) 0, transparent 22%);
+    radial-gradient(circle at 8% 12%, rgba(242, 166, 198, 0.2) 0, transparent 22%),
+    radial-gradient(circle at 92% 18%, rgba(214, 82, 143, 0.1) 0, transparent 24%),
+    radial-gradient(circle at 15% 85%, rgba(214, 82, 143, 0.1) 0, transparent 24%),
+    radial-gradient(circle at 88% 90%, rgba(242, 166, 198, 0.16) 0, transparent 22%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   min-height: 100vh;
@@ -79,6 +79,17 @@ h3 {
     padding: 0.2rem;
     height: 2.4rem;
   }
+
+  input.invalid {
+    border-color: #d6437a;
+    box-shadow: 0 0 0 3px rgba(214, 82, 143, 0.15);
+  }
+}
+
+.error {
+  color: #c23c7a;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .field-row {
@@ -113,6 +124,10 @@ h3 {
     border-color: var(--primary);
   }
 
+  &:active {
+    transform: scale(0.95);
+  }
+
   &.selected {
     background: var(--primary);
     color: var(--primary-contrast);
@@ -131,10 +146,26 @@ button.primary {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(214, 82, 143, 0.3);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.15s ease;
 
   &:hover {
     opacity: 0.92;
     transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 2px 6px rgba(214, 82, 143, 0.3);
+  }
+
+  &.added {
+    background: linear-gradient(135deg, #4caf7d, #3d9468);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
 }
 

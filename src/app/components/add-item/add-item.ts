@@ -9,6 +9,7 @@ import {
   Occasion,
 } from '../../models/clothing-item.model';
 import { ClosetService } from '../../services/closet.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-add-item',
@@ -29,8 +30,12 @@ export class AddItem {
   purchasedFrom = '';
   selectedOccasions = signal<Set<Occasion>>(new Set());
   imageDataUrl = signal<string | undefined>(undefined);
+  showValidation = signal(false);
 
-  constructor(private closet: ClosetService) {}
+  constructor(
+    private closet: ClosetService,
+    private toast: ToastService
+  ) {}
 
   toggleOccasion(occasion: Occasion): void {
     const next = new Set(this.selectedOccasions());
@@ -49,7 +54,10 @@ export class AddItem {
   }
 
   submit(): void {
-    if (!this.name.trim() || this.selectedOccasions().size === 0) return;
+    if (!this.name.trim() || this.selectedOccasions().size === 0) {
+      this.showValidation.set(true);
+      return;
+    }
 
     this.closet.addItem({
       name: this.name.trim(),
@@ -61,9 +69,12 @@ export class AddItem {
       imageDataUrl: this.imageDataUrl(),
     });
 
+    this.toast.show(`"${this.name.trim()}" added to your closet`);
+
     this.name = '';
     this.purchasedFrom = '';
     this.color = '#e8a4c4';
+    this.showValidation.set(false);
     this.selectedOccasions.set(new Set());
     this.imageDataUrl.set(undefined);
   }

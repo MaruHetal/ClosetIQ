@@ -3,7 +3,16 @@
 
   <div class="field">
     <label for="name">Name</label>
-    <input id="name" type="text" [(ngModel)]="name" placeholder="e.g. Navy Blazer" />
+    <input
+      id="name"
+      type="text"
+      [(ngModel)]="name"
+      placeholder="e.g. Navy Blazer"
+      [class.invalid]="showValidation() && !name.trim()"
+    />
+    @if (showValidation() && !name.trim()) {
+      <span class="error">Please give this item a name.</span>
+    }
   </div>
 
   <div class="field-row">
@@ -57,6 +66,9 @@
         </button>
       }
     </div>
+    @if (showValidation() && selectedOccasions().size === 0) {
+      <span class="error">Pick at least one occasion.</span>
+    }
   </div>
 
   <div class="field">

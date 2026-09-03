@@ -14,8 +14,13 @@
           }
         </div>
         <strong>{{ look.title }}</strong>
-        <button type="button" class="primary small" (click)="addLook(look)">
-          Add this look to my closet
+        <button
+          type="button"
+          class="primary small"
+          [class.added]="justAdded() === look.title"
+          (click)="addLook(look)"
+        >
+          {{ justAdded() === look.title ? '✓ Added to closet' : 'Add this look to my closet' }}
         </button>
       </article>
     }
