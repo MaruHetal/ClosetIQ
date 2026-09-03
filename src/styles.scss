@@ -1,13 +1,15 @@
 :root {
-  --bg: #f5f4f2;
+  --bg: #fdf1f6;
   --card-bg: #ffffff;
-  --text: #1e1e1e;
-  --muted: #767676;
-  --border: #e2e0dc;
-  --primary: #2f4b3c;
+  --text: #4a2c3a;
+  --muted: #9a7488;
+  --border: #f3d3e2;
+  --primary: #d6528f;
   --primary-contrast: #ffffff;
-  --accent: #c9a15a;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  --accent: #f2a6c6;
+  --accent-soft: #fbe3ee;
+  --heading-font: 'Playfair Display', 'Georgia', serif;
+  font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
 }
 
 * {
@@ -16,16 +18,32 @@
 
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--text);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(242, 166, 198, 0.35) 0, transparent 22%),
+    radial-gradient(circle at 92% 18%, rgba(214, 82, 143, 0.18) 0, transparent 24%),
+    radial-gradient(circle at 15% 85%, rgba(214, 82, 143, 0.18) 0, transparent 24%),
+    radial-gradient(circle at 88% 90%, rgba(242, 166, 198, 0.3) 0, transparent 22%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--heading-font);
+  color: var(--primary);
 }
 
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 18px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  box-shadow: 0 4px 18px rgba(214, 82, 143, 0.08);
 }
 
 .field {
@@ -44,8 +62,17 @@ body {
   select {
     padding: 0.5rem 0.6rem;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 0.95rem;
+    font-family: inherit;
+    background: #fff;
+    color: var(--text);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(214, 82, 143, 0.15);
+    }
   }
 
   input[type='color'] {
@@ -57,9 +84,11 @@ body {
 .field-row {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 
   .field {
     flex: 1;
+    min-width: 160px;
   }
 }
 
@@ -71,11 +100,18 @@ body {
 
 .chip {
   border: 1px solid var(--border);
-  background: transparent;
+  background: #fff;
+  color: var(--text);
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
   cursor: pointer;
   font-size: 0.85rem;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--primary);
+  }
 
   &.selected {
     background: var(--primary);
@@ -85,23 +121,27 @@ body {
 }
 
 button.primary {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), #c23c7a);
   color: var(--primary-contrast);
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   padding: 0.65rem 1.4rem;
   font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(214, 82, 143, 0.3);
 
   &:hover {
-    opacity: 0.9;
+    opacity: 0.92;
+    transform: translateY(-1px);
   }
 }
 
 .preview {
   margin-top: 0.6rem;
   max-width: 140px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid var(--border);
 }
 

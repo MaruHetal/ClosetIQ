@@ -1,0 +1,23 @@
+<section class="example-looks card">
+  <h2>✨ Example looks to get you inspired</h2>
+  <p class="muted">
+    Not sure where to start? Pick a ready-made look — it'll drop straight into your closet.
+  </p>
+
+  <div class="grid">
+    @for (look of looks; track look.title) {
+      <article class="look-card">
+        <span class="vibe">{{ look.vibe }}</span>
+        <div class="pieces">
+          @for (piece of look.pieces; track piece.name) {
+            <img [src]="piece.imageDataUrl" alt="{{ piece.name }}" />
+          }
+        </div>
+        <strong>{{ look.title }}</strong>
+        <button type="button" class="primary small" (click)="addLook(look)">
+          Add this look to my closet
+        </button>
+      </article>
+    }
+  </div>
+</section>

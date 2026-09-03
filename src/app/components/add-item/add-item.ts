@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import {
   CATEGORY_LABELS,
   ClothingCategory,
+  GENDER_LABELS,
+  Gender,
   OCCASION_LABELS,
   Occasion,
 } from '../../models/clothing-item.model';
@@ -18,10 +20,12 @@ import { ClosetService } from '../../services/closet.service';
 export class AddItem {
   readonly categoryOptions = Object.entries(CATEGORY_LABELS) as [ClothingCategory, string][];
   readonly occasionOptions = Object.entries(OCCASION_LABELS) as [Occasion, string][];
+  readonly genderOptions = Object.entries(GENDER_LABELS) as [Gender, string][];
 
   name = '';
   category: ClothingCategory = 'tshirt';
-  color = '#3366cc';
+  gender: Gender = 'unisex';
+  color = '#e8a4c4';
   purchasedFrom = '';
   selectedOccasions = signal<Set<Occasion>>(new Set());
   imageDataUrl = signal<string | undefined>(undefined);
@@ -50,6 +54,7 @@ export class AddItem {
     this.closet.addItem({
       name: this.name.trim(),
       category: this.category,
+      gender: this.gender,
       color: this.color,
       occasions: Array.from(this.selectedOccasions()),
       purchasedFrom: this.purchasedFrom.trim() || undefined,
@@ -58,7 +63,7 @@ export class AddItem {
 
     this.name = '';
     this.purchasedFrom = '';
-    this.color = '#3366cc';
+    this.color = '#e8a4c4';
     this.selectedOccasions.set(new Set());
     this.imageDataUrl.set(undefined);
   }

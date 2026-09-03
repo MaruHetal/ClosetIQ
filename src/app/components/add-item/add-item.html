@@ -23,6 +23,22 @@
   </div>
 
   <div class="field">
+    <label>Who's it for?</label>
+    <div class="chip-group">
+      @for (opt of genderOptions; track opt[0]) {
+        <button
+          type="button"
+          class="chip"
+          [class.selected]="gender === opt[0]"
+          (click)="gender = opt[0]"
+        >
+          {{ opt[1] }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="field">
     <label for="purchasedFrom">Purchased from (optional)</label>
     <input id="purchasedFrom" type="text" [(ngModel)]="purchasedFrom" placeholder="e.g. Zara" />
   </div>

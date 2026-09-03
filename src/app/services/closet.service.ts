@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { STARTER_WARDROBE } from '../data/starter-wardrobe';
 import { ClothingItem } from '../models/clothing-item.model';
 
 const STORAGE_KEY = 'closetiq.items.v1';
@@ -33,6 +34,18 @@ export class ClosetService {
 
   removeItem(id: string): void {
     const updated = this.items().filter((i) => i.id !== id);
+    this.items.set(updated);
+    this.persist(updated);
+  }
+
+  /** Adds the ready-made starter pieces so suggestions appear right away. */
+  loadStarterWardrobe(): void {
+    const seeded = STARTER_WARDROBE.map((item) => ({
+      ...item,
+      id: crypto.randomUUID(),
+      createdAt: Date.now(),
+    }));
+    const updated = [...this.items(), ...seeded];
     this.items.set(updated);
     this.persist(updated);
   }

@@ -1,13 +1,31 @@
 <section class="outfit-suggestions card">
   <h2>Outfit suggestions</h2>
 
-  <div class="field">
-    <label for="occasion">Where are you headed?</label>
-    <select id="occasion" [ngModel]="occasion()" (ngModelChange)="occasion.set($event)">
-      @for (opt of occasionOptions; track opt[0]) {
-        <option [value]="opt[0]">{{ opt[1] }}</option>
-      }
-    </select>
+  <div class="field-row">
+    <div class="field">
+      <label for="occasion">Where are you headed?</label>
+      <select id="occasion" [ngModel]="occasion()" (ngModelChange)="occasion.set($event)">
+        @for (opt of occasionOptions; track opt[0]) {
+          <option [value]="opt[0]">{{ opt[1] }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label>For</label>
+      <div class="chip-group">
+        @for (g of genderFilters; track g) {
+          <button
+            type="button"
+            class="chip"
+            [class.selected]="gender() === g"
+            (click)="gender.set(g)"
+          >
+            {{ g === 'all' ? 'All' : genderLabels[g] }}
+          </button>
+        }
+      </div>
+    </div>
   </div>
 
   @if (suggestions().length === 0) {

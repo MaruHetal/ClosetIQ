@@ -16,14 +16,17 @@ export type Occasion =
   | 'formal-event'
   | 'workout';
 
+export type Gender = 'girls' | 'boys' | 'unisex';
+
 export interface ClothingItem {
   id: string;
   name: string;
   category: ClothingCategory;
   color: string; // hex color, e.g. #1a2b3c
   occasions: Occasion[];
+  gender: Gender;
   purchasedFrom?: string;
-  imageDataUrl?: string; // base64 image stored locally
+  imageDataUrl?: string; // base64 image, or an inline SVG data URL for starter pieces
   createdAt: number;
 }
 
@@ -45,6 +48,12 @@ export const OCCASION_LABELS: Record<Occasion, string> = {
   party: 'Party',
   'formal-event': 'Formal Event',
   workout: 'Workout',
+};
+
+export const GENDER_LABELS: Record<Gender, string> = {
+  girls: 'Girls',
+  boys: 'Boys',
+  unisex: 'Unisex',
 };
 
 export const TOP_CATEGORIES: ClothingCategory[] = ['top', 'tshirt', 'shirt'];

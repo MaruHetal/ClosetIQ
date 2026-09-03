@@ -1,11 +1,32 @@
 <section class="closet-grid card">
-  <h2>My closet ({{ closet.items().length }})</h2>
+  <div class="header-row">
+    <h2>My closet ({{ filteredItems().length }})</h2>
+    <div class="chip-group">
+      @for (g of genderFilters; track g) {
+        <button
+          type="button"
+          class="chip"
+          [class.selected]="filter() === g"
+          (click)="filter.set(g)"
+        >
+          {{ g === 'all' ? 'All' : genderLabels[g] }}
+        </button>
+      }
+    </div>
+  </div>
 
   @if (closet.items().length === 0) {
-    <p class="empty">No items yet — add your first piece above.</p>
+    <div class="empty-state">
+      <p class="empty">No items yet — add your first piece above, or get instant inspiration:</p>
+      <button type="button" class="primary" (click)="loadStarterWardrobe()">
+        🌸 Load a starter wardrobe
+      </button>
+    </div>
+  } @else if (filteredItems().length === 0) {
+    <p class="empty">Nothing in this filter yet — try "All" or add a new piece.</p>
   } @else {
     <div class="grid">
-      @for (item of closet.items(); track item.id) {
+      @for (item of filteredItems(); track item.id) {
         <article class="item-card">
           <button type="button" class="remove" (click)="remove(item.id)" title="Remove">×</button>
           @if (item.imageDataUrl) {
@@ -15,7 +36,7 @@
           }
           <div class="details">
             <strong>{{ item.name }}</strong>
-            <span class="muted">{{ labels[item.category] }}</span>
+            <span class="muted">{{ labels[item.category] }} · {{ genderLabels[item.gender] }}</span>
             <div class="tags">
               @for (occ of item.occasions; track occ) {
                 <span class="tag">{{ occ }}</span>
