@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { ClothingItem } from '../models/clothing-item.model';
 
-const STORAGE_KEY = 'closet-stylist.items.v1';
+const STORAGE_KEY = 'closetiq.items.v1';
 
 @Injectable({ providedIn: 'root' })
 export class ClosetService {

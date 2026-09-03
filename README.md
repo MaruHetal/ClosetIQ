@@ -1,4 +1,4 @@
-# Closet Stylist
+# ClosetIQ
 
 An Angular app for cataloging your wardrobe (t-shirts, tops, pants, jackets,
 etc.) and getting outfit suggestions based on occasion and color matching.
