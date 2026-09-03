@@ -1,0 +1,54 @@
+<section class="outfit-suggestions card">
+  <h2>Outfit suggestions</h2>
+
+  <div class="field">
+    <label for="occasion">Where are you headed?</label>
+    <select id="occasion" [ngModel]="occasion()" (ngModelChange)="occasion.set($event)">
+      @for (opt of occasionOptions; track opt[0]) {
+        <option [value]="opt[0]">{{ opt[1] }}</option>
+      }
+    </select>
+  </div>
+
+  @if (suggestions().length === 0) {
+    <p class="empty">
+      No matching outfits yet. Add a top and bottom tagged for this occasion.
+    </p>
+  } @else {
+    <div class="grid">
+      @for (s of suggestions(); track s.top.id + s.bottom.id + (s.jacket?.id || '')) {
+        <article class="outfit-card">
+          <div class="score">{{ scorePercent(s.score) }}% match</div>
+          <div class="pieces">
+            <div class="piece">
+              @if (s.top.imageDataUrl) {
+                <img [src]="s.top.imageDataUrl" alt="{{ s.top.name }}" />
+              } @else {
+                <div class="swatch" [style.background]="s.top.color"></div>
+              }
+              <span>{{ s.top.name }}</span>
+            </div>
+            <div class="piece">
+              @if (s.bottom.imageDataUrl) {
+                <img [src]="s.bottom.imageDataUrl" alt="{{ s.bottom.name }}" />
+              } @else {
+                <div class="swatch" [style.background]="s.bottom.color"></div>
+              }
+              <span>{{ s.bottom.name }}</span>
+            </div>
+            @if (s.jacket; as jacket) {
+              <div class="piece">
+                @if (jacket.imageDataUrl) {
+                  <img [src]="jacket.imageDataUrl" alt="{{ jacket.name }}" />
+                } @else {
+                  <div class="swatch" [style.background]="jacket.color"></div>
+                }
+                <span>{{ jacket.name }}</span>
+              </div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

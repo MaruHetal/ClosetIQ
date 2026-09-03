@@ -1,0 +1,115 @@
+:root {
+  --bg: #f5f4f2;
+  --card-bg: #ffffff;
+  --text: #1e1e1e;
+  --muted: #767676;
+  --border: #e2e0dc;
+  --primary: #2f4b3c;
+  --primary-contrast: #ffffff;
+  --accent: #c9a15a;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  input,
+  select {
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  input[type='color'] {
+    padding: 0.2rem;
+    height: 2.4rem;
+  }
+}
+
+.field-row {
+  display: flex;
+  gap: 1rem;
+
+  .field {
+    flex: 1;
+  }
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+
+  &.selected {
+    background: var(--primary);
+    color: var(--primary-contrast);
+    border-color: var(--primary);
+  }
+}
+
+button.primary {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.preview {
+  margin-top: 0.6rem;
+  max-width: 140px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.empty {
+  color: var(--muted);
+}

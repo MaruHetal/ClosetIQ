@@ -1,0 +1,55 @@
+<section class="add-item card">
+  <h2>Add a clothing item</h2>
+
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" type="text" [(ngModel)]="name" placeholder="e.g. Navy Blazer" />
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="category">Category</label>
+      <select id="category" [(ngModel)]="category">
+        @for (opt of categoryOptions; track opt[0]) {
+          <option [value]="opt[0]">{{ opt[1] }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="color">Color</label>
+      <input id="color" type="color" [(ngModel)]="color" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="purchasedFrom">Purchased from (optional)</label>
+    <input id="purchasedFrom" type="text" [(ngModel)]="purchasedFrom" placeholder="e.g. Zara" />
+  </div>
+
+  <div class="field">
+    <label>Wear it for</label>
+    <div class="chip-group">
+      @for (opt of occasionOptions; track opt[0]) {
+        <button
+          type="button"
+          class="chip"
+          [class.selected]="selectedOccasions().has(opt[0])"
+          (click)="toggleOccasion(opt[0])"
+        >
+          {{ opt[1] }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="photo">Photo (optional)</label>
+    <input id="photo" type="file" accept="image/*" (change)="onFileSelected($event)" />
+    @if (imageDataUrl(); as preview) {
+      <img class="preview" [src]="preview" alt="Preview of {{ name || 'clothing item' }}" />
+    }
+  </div>
+
+  <button type="button" class="primary" (click)="submit()">Add to closet</button>
+</section>

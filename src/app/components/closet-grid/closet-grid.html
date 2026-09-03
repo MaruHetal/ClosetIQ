@@ -1,0 +1,29 @@
+<section class="closet-grid card">
+  <h2>My closet ({{ closet.items().length }})</h2>
+
+  @if (closet.items().length === 0) {
+    <p class="empty">No items yet — add your first piece above.</p>
+  } @else {
+    <div class="grid">
+      @for (item of closet.items(); track item.id) {
+        <article class="item-card">
+          <button type="button" class="remove" (click)="remove(item.id)" title="Remove">×</button>
+          @if (item.imageDataUrl) {
+            <img [src]="item.imageDataUrl" alt="{{ item.name }}" />
+          } @else {
+            <div class="swatch" [style.background]="item.color"></div>
+          }
+          <div class="details">
+            <strong>{{ item.name }}</strong>
+            <span class="muted">{{ labels[item.category] }}</span>
+            <div class="tags">
+              @for (occ of item.occasions; track occ) {
+                <span class="tag">{{ occ }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
