@@ -1,6 +1,11 @@
 <section class="closet-grid card">
   <div class="header-row">
-    <h2>My closet ({{ filteredItems().length }})</h2>
+    <div>
+      <span class="eyebrow">Saved on this device</span>
+      <h2>
+        My closet <small>{{ filteredItems().length }}</small>
+      </h2>
+    </div>
     <div class="chip-group">
       @for (g of genderFilters; track g) {
         <button
@@ -17,10 +22,14 @@
 
   @if (closet.items().length === 0) {
     <div class="empty-state">
-      <p class="empty">No items yet — add your first piece above, or get instant inspiration:</p>
-      <button type="button" class="primary" (click)="loadStarterWardrobe()">
-        🌸 Load a starter wardrobe
-      </button>
+      <p class="empty">
+        Your closet is empty — that’s fine. Add a piece you actually own, or open a color formula
+        first.
+      </p>
+      <div class="empty-actions">
+        <a class="button primary" href="#add-item">Add a real piece</a>
+        <a class="button secondary" href="#inspiration">Browse color formulas</a>
+      </div>
     </div>
   } @else if (filteredItems().length === 0) {
     <p class="empty">Nothing in this filter yet — try "All" or add a new piece.</p>
@@ -39,7 +48,7 @@
             <span class="muted">{{ labels[item.category] }} · {{ genderLabels[item.gender] }}</span>
             <div class="tags">
               @for (occ of item.occasions; track occ) {
-                <span class="tag">{{ occ }}</span>
+                <span class="tag">{{ occasionLabels[occ] }}</span>
               }
             </div>
           </div>

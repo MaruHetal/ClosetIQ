@@ -5,6 +5,9 @@ export type ClothingCategory =
   | 'kurta'
   | 'pants'
   | 'jeans'
+  | 'leggings'
+  | 'skirt'
+  | 'shorts'
   | 'jacket'
   | 'shoes'
   | 'accessory'
@@ -15,12 +18,7 @@ export type ClothingCategory =
   | 'gown';
 
 export type Occasion =
-  | 'office'
-  | 'family-function'
-  | 'casual'
-  | 'party'
-  | 'formal-event'
-  | 'workout';
+  'office' | 'family-function' | 'casual' | 'party' | 'formal-event' | 'workout';
 
 export type Gender = 'girls' | 'boys' | 'unisex';
 
@@ -43,6 +41,9 @@ export const CATEGORY_LABELS: Record<ClothingCategory, string> = {
   kurta: 'Kurta',
   pants: 'Pants',
   jeans: 'Jeans',
+  leggings: 'Leggings / Jeggings',
+  skirt: 'Skirt',
+  shorts: 'Shorts',
   jacket: 'Jacket',
   shoes: 'Shoes',
   accessory: 'Accessory',
@@ -69,7 +70,14 @@ export const GENDER_LABELS: Record<Gender, string> = {
 };
 
 export const TOP_CATEGORIES: ClothingCategory[] = ['top', 'tshirt', 'shirt', 'kurta', 'blouse'];
-export const BOTTOM_CATEGORIES: ClothingCategory[] = ['pants', 'jeans', 'saree'];
+export const BOTTOM_CATEGORIES: ClothingCategory[] = [
+  'pants',
+  'jeans',
+  'leggings',
+  'skirt',
+  'shorts',
+  'saree',
+];
 export const OUTER_CATEGORIES: ClothingCategory[] = ['jacket'];
 /** Complete outfits on their own — shown as single-piece suggestions, not paired with a bottom. */
 export const ONE_PIECE_CATEGORIES: ClothingCategory[] = ['salwar-kameez', 'dress', 'gown'];

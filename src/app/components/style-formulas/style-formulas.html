@@ -1,0 +1,37 @@
+<section class="style-formulas" id="inspiration">
+  <div class="section-heading">
+    <span class="eyebrow">No photos required</span>
+    <h2>Color formulas that always work</h2>
+    <p>
+      These are proven pairings, not stock clothes dropped into your closet. Open any formula in the
+      style advisor to explore more matches from the same starting color.
+    </p>
+  </div>
+
+  <div class="formula-grid">
+    @for (formula of formulas; track formula.id) {
+      <article class="formula-card">
+        <div class="swatch-stack" aria-hidden="true">
+          <span [style.background]="formula.start.color"></span>
+          @for (pairing of formula.pairings.slice(0, 2); track pairing.label) {
+            <span [style.background]="pairing.color"></span>
+          }
+        </div>
+        <span class="occasion">{{ formula.occasion }}</span>
+        <h3>{{ formula.title }}</h3>
+        <p>{{ formula.why }}</p>
+        <div class="pairing-chips">
+          @for (pairing of formula.pairings; track pairing.label) {
+            <span>
+              <i [style.background]="pairing.color"></i>
+              {{ pairing.label }}
+            </span>
+          }
+        </div>
+        <a class="button secondary" href="#style-advisor" (click)="tryFormula(formula)">
+          Try this in the advisor
+        </a>
+      </article>
+    }
+  </div>
+</section>

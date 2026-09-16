@@ -1,15 +1,123 @@
-<main class="page">
-  <header class="page-header">
-    <div class="header-flowers" aria-hidden="true">🌸🌷🌸</div>
-    <h1>ClosetIQ</h1>
-    <p>Upload your wardrobe. Discover your style.</p>
-    <p class="subtitle">Catalog your closet and get outfit suggestions for any occasion.</p>
-  </header>
+<header class="site-header">
+  <a class="brand" href="#" aria-label="ClosetIQ home">
+    <span class="brand-mark">C</span>
+    <span>Closet<span>IQ</span></span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#style-advisor">Style advisor</a>
+    <a href="#wardrobe">My wardrobe</a>
+    <a href="#inspiration">Color formulas</a>
+  </nav>
+  <a class="header-action" href="#add-item">Add a piece</a>
+</header>
 
-  <app-example-looks />
-  <app-add-item />
-  <app-outfit-suggestions />
-  <app-closet-grid />
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Your personal color & wardrobe assistant</span>
+      <h1>Know exactly what <em>works together.</em></h1>
+      <p>
+        Start with a photo or simply choose a color. Get clear suggestions for matching shirts,
+        trousers, jeans, layers and more — using pieces you own or ideas you can shop for.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#style-advisor">Find my color matches</a>
+        <a class="button secondary" href="#wardrobe">Open my wardrobe</a>
+      </div>
+      <div class="trust-row">
+        <span><strong>Private by design</strong> Photos stay in your browser</span>
+        <span><strong>No sign-up</strong> Start styling instantly</span>
+      </div>
+    </div>
+    <div class="hero-visual" aria-label="Example color combination">
+      <div class="look-card look-main">
+        <div class="look-image navy"></div>
+        <div>
+          <span>Start with</span>
+          <strong>Navy blue shirt</strong>
+        </div>
+      </div>
+      <div class="match-line"><span>Pairs beautifully with</span></div>
+      <div class="look-options">
+        <div class="look-card">
+          <div class="look-image ivory"></div>
+          <strong>Ivory trousers</strong>
+          <span>Clean & classy</span>
+        </div>
+        <div class="look-card">
+          <div class="look-image camel"></div>
+          <strong>Camel chinos</strong>
+          <span>Smart casual</span>
+        </div>
+        <div class="look-card">
+          <div class="look-image denim"></div>
+          <strong>Blue jeans</strong>
+          <span>Tonal everyday</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <app-toast />
+  <section class="content-section">
+    <app-style-advisor />
+  </section>
+
+  <section class="how-it-works">
+    <span class="eyebrow">Three easy steps</span>
+    <h2>From “what goes with this?” to ready to wear.</h2>
+    <div class="steps">
+      <article>
+        <span>01</span>
+        <h3>Choose your starting piece</h3>
+        <p>Upload a photo, select a saved item, or pick any color.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>Tell us what it is</h3>
+        <p>A shirt, jeans, kurta, saree or dress — the piece type shapes the advice.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>Build a confident look</h3>
+        <p>See complementary colors, garment ideas and matches already in your closet.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <app-style-formulas />
+  </section>
+
+  <section class="content-section wardrobe-section" id="wardrobe">
+    <div class="section-intro">
+      <span class="eyebrow">Your digital wardrobe</span>
+      <h2>Save your pieces. Create complete outfits.</h2>
+      <p>
+        Add the clothes you wear, including a photo if you want. Then build occasion-ready outfits
+        from your own wardrobe.
+      </p>
+    </div>
+    <div class="wardrobe-tools">
+      <div id="add-item"><app-add-item /></div>
+      <app-outfit-suggestions />
+    </div>
+    <app-closet-grid />
+  </section>
+
+  <section class="closing-cta">
+    <span class="eyebrow">Better outfits start with one piece</span>
+    <h2>Use what you own. Wear color with confidence.</h2>
+    <a class="button light" href="#style-advisor">Open the style advisor</a>
+  </section>
+
+  <footer>
+    <a class="brand" href="#">
+      <span class="brand-mark">C</span>
+      <span>Closet<span>IQ</span></span>
+    </a>
+    <p>Thoughtful combinations for every wardrobe.</p>
+    <span>Your data stays on this device.</span>
+  </footer>
 </main>
+
+<app-toast />

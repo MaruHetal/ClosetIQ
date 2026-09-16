@@ -9,6 +9,7 @@ import {
   Occasion,
 } from '../../models/clothing-item.model';
 import { ClosetService } from '../../services/closet.service';
+import { dominantColorFromImage, resizeImageForStorage } from '../../services/image-color';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -30,11 +31,12 @@ export class AddItem {
   purchasedFrom = '';
   selectedOccasions = signal<Set<Occasion>>(new Set());
   imageDataUrl = signal<string | undefined>(undefined);
+  photoStatus = signal('');
   showValidation = signal(false);
 
   constructor(
     private closet: ClosetService,
-    private toast: ToastService
+    private toast: ToastService,
   ) {}
 
   toggleOccasion(occasion: Occasion): void {
@@ -47,9 +49,25 @@ export class AddItem {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      this.photoStatus.set('Please choose a photo smaller than 5 MB.');
+      input.value = '';
+      return;
+    }
 
     const reader = new FileReader();
-    reader.onload = () => this.imageDataUrl.set(reader.result as string);
+    this.photoStatus.set('Reading the garment color…');
+    reader.onload = async () => {
+      try {
+        const dataUrl = await resizeImageForStorage(reader.result as string);
+        this.imageDataUrl.set(dataUrl);
+        this.color = await dominantColorFromImage(dataUrl);
+        this.photoStatus.set('Main color detected — you can adjust it below.');
+      } catch {
+        this.imageDataUrl.set(reader.result as string);
+        this.photoStatus.set('Photo added. Choose the closest color below.');
+      }
+    };
     reader.readAsDataURL(file);
   }
 
@@ -77,5 +95,6 @@ export class AddItem {
     this.showValidation.set(false);
     this.selectedOccasions.set(new Set());
     this.imageDataUrl.set(undefined);
+    this.photoStatus.set('');
   }
 }

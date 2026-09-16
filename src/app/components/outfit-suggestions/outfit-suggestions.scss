@@ -1,18 +1,44 @@
+.outfit-suggestions {
+  > h2 {
+    margin: 0.25rem 0 0.35rem;
+  }
+}
+
+.section-copy {
+  margin: 0 0 1.2rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.75rem;
 }
 
 .outfit-card {
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.8rem;
+  border-radius: 13px;
+  padding: 0.75rem;
+  background: var(--surface-alt);
 
   .score {
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 800;
     color: var(--primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+
+    span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
   }
 
   .pieces {
@@ -26,15 +52,22 @@
     flex-direction: column;
     align-items: center;
     gap: 0.3rem;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     text-align: center;
 
     img,
     .swatch {
       width: 100%;
-      height: 70px;
+      height: 78px;
       object-fit: cover;
-      border-radius: 6px;
+      border-radius: 8px;
+    }
+
+    strong {
+      overflow: hidden;
+      max-width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

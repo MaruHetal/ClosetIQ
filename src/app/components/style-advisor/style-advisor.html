@@ -1,0 +1,224 @@
+<section class="advisor-section" id="style-advisor">
+  <div class="section-heading">
+    <span class="eyebrow">Personal styling, made simple</span>
+    <h2>Build a look around any piece</h2>
+    <p>
+      Upload a clothing photo, choose a color, or pick something from your closet. ClosetIQ will
+      suggest wearable colors and the right kind of pieces to pair with it.
+    </p>
+  </div>
+
+  <div class="advisor-shell">
+    <div class="advisor-input">
+      <div class="source-tabs" role="tablist" aria-label="How would you like to start?">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="source() === 'photo'"
+          [class.active]="source() === 'photo'"
+          (click)="setSource('photo')"
+        >
+          Upload a photo
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="source() === 'color'"
+          [class.active]="source() === 'color'"
+          (click)="setSource('color')"
+        >
+          Choose a color
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="source() === 'closet'"
+          [class.active]="source() === 'closet'"
+          (click)="setSource('closet')"
+        >
+          From my closet
+        </button>
+      </div>
+
+      @if (source() === 'photo') {
+        <div class="upload-zone" [class.has-image]="imageDataUrl()">
+          <input
+            id="advisor-photo"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+          @if (imageDataUrl(); as preview) {
+            <img [src]="preview" alt="Uploaded clothing preview" />
+            <div class="upload-copy">
+              <strong>{{ imageName() || 'Your clothing item' }}</strong>
+              <span>Choose another photo</span>
+            </div>
+          } @else {
+            <span class="upload-icon" aria-hidden="true">+</span>
+            <div class="upload-copy">
+              <strong>Drop in a clear clothing photo</strong>
+              <span>JPG or PNG · up to 8 MB · stays on this device</span>
+            </div>
+          }
+        </div>
+        @if (isAnalyzing()) {
+          <p class="status">Finding the main garment color…</p>
+        }
+        @if (imageError()) {
+          <p class="error">{{ imageError() }}</p>
+        }
+      } @else if (source() === 'color') {
+        <div class="color-picker-panel">
+          <label for="advisor-color">What color are you styling?</label>
+          <div class="color-control">
+            <input
+              id="advisor-color"
+              type="color"
+              [ngModel]="color()"
+              (ngModelChange)="setColor($event)"
+            />
+            <div>
+              <strong>{{ colorName() }}</strong>
+              <span>{{ color() }}</span>
+            </div>
+          </div>
+          <p>No photo needed — explore combinations for any color in seconds.</p>
+        </div>
+      } @else {
+        @if (closet.items().length) {
+          <div class="closet-select-panel">
+            <label for="closet-piece">Choose a saved piece</label>
+            <select
+              id="closet-piece"
+              [ngModel]="selectedClosetId()"
+              (ngModelChange)="selectClosetItem($event)"
+            >
+              @for (item of closet.items(); track item.id) {
+                <option [value]="item.id">
+                  {{ item.name }} · {{ categoryLabels[item.category] }}
+                </option>
+              }
+            </select>
+            @if (selectedClosetItem(); as item) {
+              <div class="selected-piece">
+                @if (item.imageDataUrl) {
+                  <img [src]="item.imageDataUrl" alt="{{ item.name }}" />
+                } @else {
+                  <span class="piece-swatch" [style.background]="item.color"></span>
+                }
+                <div>
+                  <strong>{{ item.name }}</strong>
+                  <span
+                    >{{ advisor.colorName(item.color) }} · {{ categoryLabels[item.category] }}</span
+                  >
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="closet-empty">
+            <strong>Your closet is ready for its first piece.</strong>
+            <p>Add an item below, or use “Choose a color” for instant advice.</p>
+          </div>
+        }
+      }
+
+      @if (source() !== 'closet' || closet.items().length) {
+        <div class="garment-field">
+          <label for="advisor-category">What kind of piece is it?</label>
+          <select
+            id="advisor-category"
+            [ngModel]="category()"
+            (ngModelChange)="setCategory($event)"
+          >
+            @for (option of categories; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          <span>We’ll recommend {{ targetLabel() }}.</span>
+        </div>
+      }
+    </div>
+
+    <div class="advisor-results">
+      @if (source() === 'photo' && !imageDataUrl()) {
+        <div class="results-placeholder">
+          <div class="palette-preview" aria-hidden="true">
+            <span style="background: #315a8c"></span>
+            <span style="background: #f7f5ef"></span>
+            <span style="background: #d8c3a5"></span>
+            <span style="background: #353a40"></span>
+          </div>
+          <h3>Your matches will appear here</h3>
+          <p>
+            Use a well-lit photo with the garment filling most of the frame for the best color
+            reading.
+          </p>
+        </div>
+      } @else if (source() === 'closet' && !closet.items().length) {
+        <div class="results-placeholder">
+          <h3>No saved items yet</h3>
+          <p>You can still use the color guide without adding anything to your closet.</p>
+        </div>
+      } @else {
+        <div class="result-heading">
+          <div>
+            <span class="eyebrow">Style recipe</span>
+            <h3>{{ colorName() }} {{ categoryLabels[category()] }}</h3>
+          </div>
+          <span class="base-color" [style.background]="color()" title="{{ color() }}"></span>
+        </div>
+
+        <div class="recommendation-grid">
+          @for (recommendation of recommendations(); track recommendation.hex) {
+            <article class="recommendation-card">
+              <div class="color-pair">
+                <span [style.background]="color()"></span>
+                <span [style.background]="recommendation.hex"></span>
+              </div>
+              <div class="recommendation-copy">
+                <span class="pairing-type">{{ recommendation.pairing }}</span>
+                <h4>{{ recommendation.name }}</h4>
+                <p>{{ recommendation.explanation }}</p>
+                <div class="garment-ideas">
+                  @for (idea of recommendation.garmentIdeas; track idea) {
+                    <span>{{ idea }}</span>
+                  }
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  @if ((source() !== 'photo' || imageDataUrl()) && closetMatches().length) {
+    <div class="closet-matches">
+      <div class="match-heading">
+        <div>
+          <span class="eyebrow">Already in your wardrobe</span>
+          <h3>Best closet matches</h3>
+        </div>
+        <p>These saved items fit the garment type and color story.</p>
+      </div>
+      <div class="match-grid">
+        @for (match of closetMatches(); track match.item.id) {
+          <article class="match-card">
+            @if (match.item.imageDataUrl) {
+              <img [src]="match.item.imageDataUrl" alt="{{ match.item.name }}" />
+            } @else {
+              <div class="match-swatch" [style.background]="match.item.color"></div>
+            }
+            <div>
+              <span class="match-score">{{ matchPercent(match.score) }}% color match</span>
+              <strong>{{ match.item.name }}</strong>
+              <small>{{ match.explanation }}</small>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  }
+</section>

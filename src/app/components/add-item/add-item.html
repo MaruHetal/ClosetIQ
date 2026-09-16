@@ -1,5 +1,9 @@
 <section class="add-item card">
-  <h2>Add a clothing item</h2>
+  <span class="eyebrow">Catalog a piece</span>
+  <h2>Add to your wardrobe</h2>
+  <p class="form-intro">
+    A photo is optional. If you add one, we’ll estimate its main color for you.
+  </p>
 
   <div class="field">
     <label for="name">Name</label>
@@ -7,7 +11,7 @@
       id="name"
       type="text"
       [(ngModel)]="name"
-      placeholder="e.g. Navy Blazer"
+      placeholder="e.g. Navy Oxford shirt"
       [class.invalid]="showValidation() && !name.trim()"
     />
     @if (showValidation() && !name.trim()) {
@@ -26,7 +30,7 @@
     </div>
 
     <div class="field">
-      <label for="color">Color</label>
+      <label for="color">Main garment color</label>
       <input id="color" type="color" [(ngModel)]="color" />
     </div>
   </div>
@@ -74,6 +78,9 @@
   <div class="field">
     <label for="photo">Photo (optional)</label>
     <input id="photo" type="file" accept="image/*" (change)="onFileSelected($event)" />
+    @if (photoStatus()) {
+      <span class="photo-status">{{ photoStatus() }}</span>
+    }
     @if (imageDataUrl(); as preview) {
       <img class="preview" [src]="preview" alt="Preview of {{ name || 'clothing item' }}" />
     }

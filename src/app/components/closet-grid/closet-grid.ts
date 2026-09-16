@@ -1,5 +1,10 @@
 import { Component, computed, signal } from '@angular/core';
-import { CATEGORY_LABELS, GENDER_LABELS, Gender } from '../../models/clothing-item.model';
+import {
+  CATEGORY_LABELS,
+  GENDER_LABELS,
+  Gender,
+  OCCASION_LABELS,
+} from '../../models/clothing-item.model';
 import { ClosetService } from '../../services/closet.service';
 import { ToastService } from '../../services/toast.service';
 
@@ -13,6 +18,7 @@ type GenderFilter = Gender | 'all';
 })
 export class ClosetGrid {
   readonly labels = CATEGORY_LABELS;
+  readonly occasionLabels = OCCASION_LABELS;
   readonly genderLabels = GENDER_LABELS;
   readonly genderFilters: GenderFilter[] = ['all', 'girls', 'boys', 'unisex'];
 
@@ -26,16 +32,11 @@ export class ClosetGrid {
 
   constructor(
     readonly closet: ClosetService,
-    private toast: ToastService
+    private toast: ToastService,
   ) {}
 
   remove(id: string): void {
     this.closet.removeItem(id);
     this.toast.show('Item removed from your closet');
-  }
-
-  loadStarterWardrobe(): void {
-    this.closet.loadStarterWardrobe();
-    this.toast.show('Starter wardrobe added — scroll down to see it!');
   }
 }

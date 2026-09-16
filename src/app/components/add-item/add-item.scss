@@ -1,1 +1,24 @@
-// Layout comes from the shared .card/.field styles in src/styles.scss.
+.add-item {
+  > h2 {
+    margin: 0.25rem 0 0.45rem;
+  }
+}
+
+.form-intro {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.photo-status {
+  color: var(--primary);
+  font-size: 0.7rem;
+}
+
+.preview {
+  width: 100%;
+  max-width: none;
+  height: 150px;
+  object-fit: cover;
+}
